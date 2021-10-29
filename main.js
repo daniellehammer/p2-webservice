@@ -4,6 +4,7 @@ const http = require(express);
 
 const allCoins = {};
 const service = express();
+service.use(express.json());
 
 service.get('/denomination', (request, response) => {
     response.json({
@@ -31,27 +32,45 @@ service.get('/denomination', (request, response) => {
       });
 
     } else {
-        if (){
+        if ((allCoins.hasOwnProperty(year) && (!allCoins.hasOwnProperty(state)))){
             //if Year exists but not state, just create state
+            allCoins[state]=1;
+            response.json({
+                ok:true,
+                results: {
+                    state: state,
+                }
+            })
         }
 
-        else if() {
+        else if((!allCoins.hasOwnProperty(year) && (allCoins.hasOwnProperty(state)))) {
             //if state exists but not year, just create year
+            allCoins[year]=1;
+            response.json({
+                ok:true,
+                results: {
+                    year: year,
+                }
+            })
         }
 
         else{
             //if neither exist, create both
+            allCoins[year]=1;
+            allCoins[state]=1;
+            response.json({
+                ok:true,
+                results: {
+                    year: year,
+                    state: state,
+                }
+            })
         }
-      allCoins[]= 1;
-      response.json({
-        ok: true,
-        results: {
-          species: name,
-          count: speciesCounts[name],
-        },
-      });
     }
-  });
+      
+      });
+    
+  
 
 
 const port = 5000;
