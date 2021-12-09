@@ -6,6 +6,18 @@ const allCoins = {};
 const service = express();
 service.use(express.json());
 
+service.use((request, response, next) => {
+    response.set('Access-Control-Allow-Origin', '*');
+    next();
+});
+
+service.options('*', (request, response) => {
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+    response.sendStatus(200);
+});
+
+
 service.get('/denomination', (request, response) => {
     response.json({
       ok: true,
@@ -73,7 +85,7 @@ service.get('/denomination', (request, response) => {
   
 
 
-const port = 5000;
+const port = 5001;
 service.listen(port, () => {
     console.log(`We're live on port ${port}`);
 });
